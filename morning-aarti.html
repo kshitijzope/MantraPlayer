@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morning Aarti</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        iframe {
+            width: 100%;
+            max-width: 640px;
+            height: 360px;
+            border: none;
+            margin: 20px auto;
+        }
+        .button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 18px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Morning Aarti</h2>
+
+    <iframe id="morningPlayer"></iframe>
+
+    <button class="button" onclick="location.href='index.html'">Go Back</button>
+
+    <script>
+        const morningAartiUrl = 'https://youtu.be/0LRLDpZXRJk?si=m9300A9YuK5ipzsh';
+
+        let tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        let firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        let morningPlayer;
+        function onYouTubeIframeAPIReady() {
+            morningPlayer = new YT.Player('morningPlayer', {
+                videoId: extractVideoID(morningAartiUrl)
+            });
+        }
+
+        function extractVideoID(url) {
+            const urlPattern = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const match = url.match(urlPattern);
+            return match ? match[1] : null;
+        }
+    </script>
+</body>
+</html>

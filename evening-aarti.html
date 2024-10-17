@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evening Aarti</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        iframe {
+            width: 100%;
+            max-width: 640px;
+            height: 360px;
+            border: none;
+            margin: 20px auto;
+        }
+        .button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            font-size: 18px;
+            background-color: #007BFF;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Evening Aarti</h2>
+
+    <iframe id="eveningPlayer"></iframe>
+
+    <button class="button" onclick="location.href='index.html'">Go Back</button>
+
+    <script>
+        const eveningAartiUrl = 'https://youtu.be/McRDHXNzAdU?si=nauZxfMsC0fNPhkU';
+
+        let tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        let firstScriptTag = document.get
