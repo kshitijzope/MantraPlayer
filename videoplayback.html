@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mantra playlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #080000;
+        }
+        h1 {
+            text-align: center;
+        }
+        iframe {
+            display: block;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 640px;
+            height: 360px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sequential YouTube Video Player</h1>
+    
+    <div id="player"></div> <!-- YouTube Player will be inserted here -->
+    
+    <script>
+        // Array to hold YouTube video URLs
+        const videoUrls = [
+            'https://youtu.be/FZuLj6HjMSc?si=svBxvDF5e_f8twbZ',
+            'https://youtu.be/CfPCAsx6m9U?si=k6YNIjtJ1YuSXj7t',
+            'https://youtu.be/liQB7pvgCVo?si=irhXBRLohGFP-vf8'
+        ];
+        let currentVideoIndex = 0;
+        
+        // Load the YouTube IFrame Player API code asynchronously
+        let tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        let firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Create YouTube player variable
+        let player;
+        
+        // Function called by the YouTube API when ready
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '360',
+                width: '640',
+                videoId: extractVideoID(videoUrls[currentVideoIndex]),
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Function to handle the state change of the player
+        function onPlayerStateChange(event) {
+            // Check if the video has ended (state 0)
+            if (event.data === YT.PlayerState.ENDED) {
+                currentVideoIndex++;
+                if (currentVideoIndex < videoUrls.length) {
+                    // Load the next video in the array using the full URL
+                    const nextVideoId = extractVideoID(videoUrls[currentVideoIndex]);
+                    player.loadVideoById(nextVideoId);
+                }
+            }
+        }
+
+        // Function to extract video ID from a YouTube URL
+        function extractVideoID(url) {
+            const urlPattern = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+            const match = url.match(urlPattern);
+            return match ? match[1] : null;
+        }
+    </script>
+</body>
+</html>
